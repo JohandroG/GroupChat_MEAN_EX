@@ -2,6 +2,7 @@ console.log("Server On (Now)");
 
 let socket = io("http://localhost:8080");
 
+
 let username = prompt("Introduce your name:");
 
 $('.chatForm').on('submit', function(event){
@@ -17,9 +18,17 @@ $('.chatForm').on('submit', function(event){
 });
 
 
-socket.on('display', function(info){
+socket.on('msj', function(info){
     let message = `<p>${info.name} :  ${info.message}</p>`;
     $('.messages' ).append(message);
 });
+
+socket.on('display', function(info){
+    for(let i = 0; i<info.length;i++){
+        let message = `<p>${info[i].name} :  ${info[i].message}</p>`;
+        $('.messages' ).append(message);
+    }
+});
+
 
 

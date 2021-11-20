@@ -15,13 +15,17 @@ const server = app.listen(8080, function(){
     console.log('Server with socket.io')
 })
 
+let prev = []
+
 const io = require('socket.io')(server)
 
 io.on("connection", function (socket) {
     console.log("Someone connected!");
+    socket.emit('display', prev);
     
     socket.on("information", function (info) {
-        io.sockets.emit('display', info);
+        prev.push(info);
+        io.sockets.emit('msj', info);
     });
 });
 
